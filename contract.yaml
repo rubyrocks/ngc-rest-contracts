@@ -1,0 +1,181 @@
+swagger: '2.0'
+info:
+  version: "1.0"
+  title: Contract RESTFul assessment
+  description: NextGear Capital RESTful assesment
+  termsOfService: http://helloreverb.com/terms/
+  contact:
+    name: Jason Russell
+    email: jason@email.com
+    url: http://swagger.io
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+host: apigee.com
+basePath: /api
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /contracts:
+    get:
+      description: Returns all contracts
+      operationId: findContracts
+      produces:
+        - application/json
+        - application/xml
+        - text/xml
+        - text/html
+      parameters:
+        - name: tags
+          in: query
+          description: tags to filter by
+          required: false
+          type: array
+          items:
+            type: string
+          collectionFormat: csv
+        - name: limit
+          in: query
+          description: maximum number of results to return
+          required: false
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: contract response
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Contract'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    post:
+      description: Creates a new contract
+      operationId: addContract
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Contract object that needs to be added
+          required: false
+          schema:
+            $ref: "#/definitions/Contract"
+      responses:
+        '200':
+          description: contract response
+          schema:
+            $ref: '#/definitions/Contract'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    put:
+      description: Updates a contract
+      operationId: updateContract
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Contract object that needs to be updated
+          required: false
+          schema:
+            $ref: "#/definitions/Contract"
+      responses:
+        '200':
+          description: contract response
+          schema:
+            $ref: '#/definitions/Contract'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /contract/{id}:
+    get:
+      description: Returns a contract based on a single ID
+      operationId: findContractById
+      produces:
+        - application/json
+        - application/xml
+        - text/xml
+        - text/html
+      parameters:
+        - name: contractId
+          in: path
+          description: ID of contract to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: contract response
+          schema:
+            $ref: '#/definitions/Contract'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    delete:
+      description: deletes a single contract based on the ID supplied
+      operationId: deleteContract
+      parameters:
+        - name: contractId
+          in: path
+          description: ID of contract to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: contract deleted
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+definitions:
+  Contract:
+    type: object
+    required:
+      - contractId
+      - contractName
+      - businessNumber
+      - auctionAccessNumber
+      - contractActivationDate
+      - isBuyer
+      - isSeller
+    properties:
+      contractId:
+        type: integer
+        format: int64
+      contractName:
+        type: string
+      businessNumber:
+        type: string
+      auctionAccessNumber:
+        type: string
+      contractActivationDate:
+        type: string
+      isBuyer:
+        type: boolean
+      isSeller:
+        type: boolean
+      tag:
+        type: string
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
