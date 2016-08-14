@@ -15,7 +15,7 @@ The underlying library integrating swagger to SpringBoot is [springfox](https://
 
 Start your server as an simple java application
 
-Use mvn clean install  ( sudo if on linux, unix, *nix )
+Use mvn clean install  ( sudo if on linux, unix, *nix ) <br>
 java -jar target/ngc-rest-contracts-1.0.0.jar
 
 You can view the api documentation in swagger-ui by pointing to  
