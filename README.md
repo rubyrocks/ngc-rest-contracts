@@ -21,6 +21,8 @@ Use mvn clean install  ( sudo if on linux, unix, *nix ) <br>
 java -jar target/ngc-rest-contracts-1.0.0.jar
 
 You can view the api documentation in swagger-ui by pointing to  
-http://localhost:8080/  
+http://localhost:8080/api
+<br>
+or hosted server such as digital ocean - http://104.236.38.214:8080/api
 
 Change default port value in application.properties
