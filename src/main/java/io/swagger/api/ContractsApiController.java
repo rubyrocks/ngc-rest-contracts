@@ -5,8 +5,10 @@ import io.swagger.model.Contract;
 
 import io.swagger.annotations.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,16 +25,35 @@ import java.util.List;
 @Controller
 public class ContractsApiController implements ContractsApi {
 
-    public ResponseEntity<Contract> addContract(
+	   @Autowired
+	   JdbcTemplate jdbcTemplate;
 
-@ApiParam(value = "Contract object that needs to be added"  ) @RequestBody Contract body
+	    public ResponseEntity<Contract> addContract(@ApiParam(value = "Contract object that needs to be added") @RequestBody Contract body) {
+	        Contract contractInsert = new Contract();
 
-) {
-        Contract contract = new Contract();
+	        // Insert into contracts table using jdbcTemplate.execute SQL
 
-        // Insert into contracts table using jdbcTemplate.execute SQL
-        return new ResponseEntity<Contract>(HttpStatus.OK);
-    }
+	        try
+	        {
+
+	            String InsertQuery = "INSERT INTO CONTRACTS" + 
+	                                 "(contractId, contractName) values" + 
+	            		             "(" + 
+	                                 body.getContractId() +
+	                                 "," +
+	                                 "'" + body.getContractName() + "'" +
+	                                 ")";
+	            System.out.println( InsertQuery );
+	            
+	            jdbcTemplate.execute(InsertQuery); 
+	        }
+	        catch (Exception e)
+	        {
+	            return new ResponseEntity<Contract>(HttpStatus.NOT_FOUND);  // 404 
+
+	        }
+	        return new ResponseEntity<Contract>(HttpStatus.OK);
+	    }
 
     public ResponseEntity<List<Contract>> findContracts(@ApiParam(value = "tags to filter by") @RequestParam(value = "tags", required = false) List<String> tags
 

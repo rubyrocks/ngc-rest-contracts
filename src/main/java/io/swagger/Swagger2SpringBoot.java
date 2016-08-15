@@ -29,7 +29,7 @@ public class Swagger2SpringBoot implements CommandLineRunner {
 	        jdbcTemplate.execute("DROP TABLE contracts IF EXISTS");
  
 	        jdbcTemplate.execute("CREATE TABLE contracts(" +
-				                "contractId SERIAL, " +
+				                "contractId BIGINT PRIMARY KEY, " +
 				                "contractName VARCHAR(255)," +
 				                "businessNumber VARCHAR(50)," +
 				                "auctionAccessNumber VARCHAR(50)," +
