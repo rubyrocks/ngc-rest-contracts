@@ -20,9 +20,9 @@ Start your server as an simple java application
 Use mvn clean install  ( sudo if on linux, unix, *nix ) <br>
 java -jar target/ngc-rest-contracts-1.0.0.jar
 
-You can view the api documentation in swagger-ui by pointing to  
+You can view the interactive contracta api in swagger-ui by pointing to  
 http://localhost:8080/api
 <br>
-or cloud server such as digital ocean - http://104.236.38.214:8080/api
+or cloud server such as digital ocean - http://162.243.5.149:8080/api
 
 Change default port value in application.properties
